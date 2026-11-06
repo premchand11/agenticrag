@@ -6,7 +6,10 @@ from uuid import uuid4
 
 from fastapi import FastAPI, Request
 
+from app.api.routes.answer import router as answer_router
+from app.api.routes.documents import router as documents_router
 from app.api.routes.health import router as health_router
+from app.api.routes.search import router as search_router
 from app.core.config import get_settings
 from app.core.database import engine
 from app.core.logging import configure_logging
@@ -47,6 +50,10 @@ def create_app() -> FastAPI:
         return response
 
     app.include_router(health_router)
+    app.include_router(documents_router)
+    app.include_router(search_router)
+    app.include_router(answer_router)
+
     return app
 
 

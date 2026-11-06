@@ -18,8 +18,20 @@ class Settings(BaseSettings):
     api_key: str | None = None
     storage_dir: str = "./data/uploads"
     embedding_dimensions: int = 384
+    max_upload_bytes: int = 20 * 1024 * 1024
+    chunk_max_tokens: int = 256
+    chunk_overlap_tokens: int = 32
+    tokenizer_path: str = "./models/bge-small-en-v1.5/tokenizer.json"
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
+    embedding_cache_dir: str = "./models/fastembed"
+    search_candidate_limit: int = 20
+    rrf_k: int = 60
+    llm_base_url: str = ""
+    llm_api_key: str | None = None
+    llm_model: str = ""
+    llm_timeout_seconds: float = 30
 
-    @field_validator("api_key", mode="before")
+    @field_validator("api_key", "llm_api_key", mode="before")
     @classmethod
     def blank_api_key_is_unset(cls, value: object) -> object:
         if isinstance(value, str) and not value.strip():
